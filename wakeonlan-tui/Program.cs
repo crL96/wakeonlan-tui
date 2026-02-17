@@ -1,12 +1,22 @@
-﻿using wakeonlan_tui.Services;
+﻿using wakeonlan_tui.UI;
 
 namespace wakeonlan_tui
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            NetworkService.WakeDevice("A1-B2-C3-D4-E5-F6");
+            if (args.Length == 0)
+            {
+                await ConsoleUI.Run();
+                return;
+            }
+            if (!(args[0]?.ToLower() == "add" || args[0]?.ToLower() == "delete"))
+            {
+                Console.WriteLine("Invalid argument. Valid arguments are 'add', 'delete' or no argument");
+                return;
+            }
+            await ConsoleUI.Run(args[0].ToLower());
         }
     }
 }

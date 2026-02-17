@@ -7,11 +7,20 @@ namespace wakeonlan_tui.UI;
 
 public class ConsoleUI
 {
-    public static async Task Run()
+    public static async Task Run(string mode = "")
     {
-        Device selected = await GetUserSelection();
-        NetworkService.WakeDevice(selected.MacAddress);
-        Console.WriteLine($"Waking {selected.Name}");
+        switch (mode)
+        {
+            case "add":
+                await AddNew();
+                return;
+            default:
+                Device selected = await GetUserSelection();
+                NetworkService.WakeDevice(selected.MacAddress);
+                Console.WriteLine($"Waking {selected.Name}");
+                return;
+        }
+
     }
 
     public static async Task<Device> GetUserSelection()
@@ -24,5 +33,14 @@ public class ConsoleUI
                 .UseConverter((device) => device.Name)
         );
         return selection;
+    }
+
+    public static async Task AddNew()
+    {
+        Console.WriteLine("Add a new device:");
+        string name = AnsiConsole.Ask<string>("Name:");
+        string macAddress = AnsiConsole.Ask<string>("MAC Address:").ToUpper();
+        await FileHandler.AddNewDevice(new(name, macAddress));
+        Console.WriteLine($"{name} added to devices");
     }
 }
