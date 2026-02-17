@@ -29,6 +29,13 @@ public class ConsoleUI
     public static async Task<Device> GetUserSelection(string prompt)
     {
         List<Device> devices = await FileHandler.GetAllDevices();
+
+        if (devices.Count == 0)
+        {
+            await AddNew();
+            devices = await FileHandler.GetAllDevices();
+        }
+
         var selection = AnsiConsole.Prompt(
             new SelectionPrompt<Device>()
                 .Title(prompt)
