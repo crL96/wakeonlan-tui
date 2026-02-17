@@ -14,8 +14,11 @@ public class ConsoleUI
             case "add":
                 await AddNew();
                 return;
+            case "delete":
+                await Delete();
+                return;
             default:
-                Device selected = await GetUserSelection();
+                Device selected = await GetUserSelection("Select which device to wake:");
                 NetworkService.WakeDevice(selected.MacAddress);
                 Console.WriteLine($"Waking {selected.Name}");
                 return;
@@ -23,12 +26,12 @@ public class ConsoleUI
 
     }
 
-    public static async Task<Device> GetUserSelection()
+    public static async Task<Device> GetUserSelection(string prompt)
     {
         List<Device> devices = await FileHandler.GetAllDevices();
         var selection = AnsiConsole.Prompt(
             new SelectionPrompt<Device>()
-                .Title("Select which device to wake:")
+                .Title(prompt)
                 .AddChoices(devices)
                 .UseConverter((device) => device.Name)
         );
@@ -42,5 +45,12 @@ public class ConsoleUI
         string macAddress = AnsiConsole.Ask<string>("MAC Address:").ToUpper();
         await FileHandler.AddNewDevice(new(name, macAddress));
         Console.WriteLine($"{name} added to devices");
+    }
+
+    public static async Task Delete()
+    {
+        var selection = await GetUserSelection("Select a device to delete:");
+        await FileHandler.DeleteDevice(selection.Name);
+        Console.WriteLine($"{selection.Name} was deleted.");
     }
 }
