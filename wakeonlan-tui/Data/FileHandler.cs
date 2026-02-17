@@ -10,6 +10,10 @@ namespace wakeonlan_tui.Data
         public static async Task AddNewDevice(Device device)
         {
             List<Device> devices = await GetAllDevices();
+            if (devices.Find(d => d.Name == device.Name) != null)
+            {
+                throw new Exception("Device name already in use");
+            }
             devices.Add(device);
             string json = JsonSerializer.Serialize(devices);
             await File.WriteAllTextAsync(_filePath, json);

@@ -40,11 +40,18 @@ public class ConsoleUI
 
     public static async Task AddNew()
     {
-        Console.WriteLine("Add a new device:");
-        string name = AnsiConsole.Ask<string>("Name:");
-        string macAddress = AnsiConsole.Ask<string>("MAC Address:").ToUpper();
-        await FileHandler.AddNewDevice(new(name, macAddress));
-        Console.WriteLine($"{name} added to devices");
+        try
+        {
+            Console.WriteLine("Add a new device:");
+            string name = AnsiConsole.Ask<string>("Name:");
+            string macAddress = AnsiConsole.Ask<string>("MAC Address:").ToUpper();
+            await FileHandler.AddNewDevice(new(name, macAddress));
+            Console.WriteLine($"{name} added to devices");
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err.Message);
+        }
     }
 
     public static async Task Delete()
