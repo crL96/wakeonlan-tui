@@ -1,4 +1,4 @@
-namespace wakeonlan_tui.Data.Models;
+namespace wakeonlan_tui.Models;
 
 public class Device
 {

@@ -1,5 +1,5 @@
 using System.Text.Json;
-using wakeonlan_tui.Data.Models;
+using wakeonlan_tui.Models;
 
 namespace wakeonlan_tui.Data
 {
