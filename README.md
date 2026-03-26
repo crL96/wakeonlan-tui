@@ -6,7 +6,10 @@ A terminal-based Wake-on-LAN (WoL) utility built with .NET and C#.
 
 This application provides a fast, keyboard-driven interface for waking devices on a network without relying on a graphical user interface. It is designed for efficiency and minimalism, enabling quick access to frequently used machines through an interactive terminal list.
 
-Devices can be stored and managed within the application, allowing seamless switching and execution of Wake-on-LAN requests with minimal input.
+Devices can be stored and managed within the application, allowing seamless switching and execution of Wake-on-LAN 
+requests with minimal input.
+
+![wakeonlan-tui](https://github.com/user-attachments/assets/18415574-3acb-408f-b365-6eb7dff9b9df)
 
 ## Getting Started
 
